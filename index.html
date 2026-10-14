@@ -250,26 +250,6 @@
     </div>
     <div class="count" id="count"></div>
     <div id="pgList"></div>
-    <div class="vcard addcard" id="pgadd">
-      <h2>➕ Add New PG Number</h2>
-      <div class="vform">
-        <div class="flab">1 · PG Number</div>
-        <input class="vin" id="npg" type="text" placeholder="e.g. PG217 or 217" autocomplete="off" style="text-transform:uppercase">
-        <div class="flab">2 · Name</div>
-        <input class="vin" id="npn" type="text" placeholder="e.g. Cowpay 3" autocomplete="off">
-        <div class="flab">3 · Group</div>
-        <div class="bchips" id="ngrp">
-          <button type="button" class="bchip on" data-g="Manual" style="--c:#818cf8"><i></i>Manual</button>
-          <button type="button" class="bchip" data-g="Others" style="--c:#22d3ee"><i></i>Others</button>
-        </div>
-        <button class="vgo gold" id="npadd">➕ Add PG</button>
-        <div class="hint" id="nphint">Added PG numbers are saved in this browser and appear in the search above.</div>
-      </div>
-      <div class="mine" id="pmine" style="display:none">
-        <div class="mine-h"><span id="pminecnt"></span></div>
-        <div id="pminelist"></div>
-      </div>
-    </div>
   </div>
 </main>
 
@@ -291,24 +271,6 @@
         <input class="vin" id="vfid" type="text" inputmode="numeric" placeholder="User ID" autocomplete="off">
         <select id="vfb"></select>
         <button class="vgo" id="vfs">Submit</button>
-      </div>
-    </div>
-    <div class="vcard addcard">
-      <h2>➕ Add New VIP User</h2>
-      <div class="vform">
-        <div class="flab">1 · Select Brand</div>
-        <div class="bchips" id="abchips"></div>
-        <div class="flab">2 · User ID</div>
-        <input class="vin" id="aid" type="text" inputmode="numeric" placeholder="User ID (multiple: 1234, 5678, 9012)" autocomplete="off">
-        <div class="flab">3 · VIP Manager (optional)</div>
-        <input class="vin" id="am" type="text" list="amlist" placeholder="Manager name" autocomplete="off">
-        <datalist id="amlist"></datalist>
-        <button class="vgo gold" id="aadd">👑 Add VIP User</button>
-        <div class="hint">Added users are saved in this browser and work in all VIP searches.</div>
-      </div>
-      <div class="mine" id="mine" style="display:none">
-        <div class="mine-h"><span id="minecnt"></span><button class="btn" id="mcopy" style="padding:5px 12px;font-size:12px">Copy list</button></div>
-        <div id="minelist"></div>
       </div>
     </div>
     <div class="vstats" id="vstats"></div>
