@@ -82,9 +82,29 @@
   .site li.mut{color:var(--muted)}
   .wag{font-size:14px;color:var(--muted);padding-top:2px}
   .wag b{color:var(--text)}
+
+  /* ===== welcome bonus release card ===== */
+  .relblock{position:relative;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 18%,var(--panel2)),var(--panel2));border:1px solid color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 0 22px color-mix(in srgb,var(--c) 22%,transparent)}
+  .relblock::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0,color-mix(in srgb,var(--c) 30%,transparent),transparent 55%);pointer-events:none}
+  .relblock .line{position:relative;align-items:center;gap:10px}
+  .relbtn{flex:1;display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff!important;font-weight:800;font-size:14.5px;padding:11px 14px;border-radius:10px;background:linear-gradient(90deg,var(--c),#ec4899);box-shadow:0 4px 16px color-mix(in srgb,var(--c) 45%,transparent);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .relbtn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:relshine 2.8s infinite}
+  .relbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px color-mix(in srgb,var(--c) 60%,transparent)}
+  .relic{font-size:20px;animation:relbounce 1.8s ease-in-out infinite;display:inline-block}
+  .reltx{flex:1}
+  .relar{font-size:18px;transition:transform .2s}
+  .relbtn:hover .relar{transform:translateX(4px)}
+  @keyframes relshine{0%{left:-60%}60%,100%{left:130%}}
+  @keyframes relbounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(-8deg)}}
+  @media (prefers-reduced-motion:reduce){.relbtn::after,.relic{animation:none}}
   .lc{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;margin-left:10px;white-space:nowrap;transition:.15s}
   .lc:hover{border-color:var(--c);color:var(--c)}
   .lc.done{background:#22c55e;border-color:#22c55e;color:#06220f}
+  .bhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+  .bhead .lbl{margin:0}
+  .lc.ball{border-color:var(--c);color:var(--c)}
+  .fullrow{margin-bottom:12px}
+  .fullrow .btn{width:100%}
   .line{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .note{color:var(--muted);font-size:12.5px;text-align:center;margin-top:10px}
 
@@ -328,7 +348,7 @@ const NOTE = "Note: Min/Max limits are per transaction; deposits and withdrawals
 
 const sites = [
   {
-    name:"TEZ888", url:"tez888.in.net", color:"#f0529c",
+    name:"TEZ888", url:"tez888.in.net", release:"https://tez888.in.net/bonus-release", color:"#f0529c",
     deposit:"Min ₹300 · Max ₹50 Lakh", withdrawal:"Min ₹1,100 · Max ₹10 Lakh", unlimited:true,
     instant:null,
     bonus:[["1st Deposit","100%","up to ₹5,000"],["2nd Deposit","100%","up to ₹10,000"],["3rd–5th Deposits","100%","up to ₹20,000 each"]],
@@ -338,7 +358,7 @@ const sites = [
     wagering:["Unlock ₹1 per ₹75 wagered","Valid 7 days"]
   },
   {
-    name:"KHEL222", url:"khel222.com", color:"#fb923c",
+    name:"KHEL222", url:"khel222.com", release:"https://khel222.com/bonus-release", color:"#fb923c",
     deposit:"Min ₹500 · Max ₹50 Lakh", withdrawal:"Min ₹1,100 · Max ₹10 Lakh", unlimited:true,
     instant:"Within 5 mins · up to ₹1,00,000 (3% fee)",
     bonus:[["1st Deposit","200%","up to ₹5,000"],["2nd Deposit","150%","up to ₹15,000"],["3rd Deposit","150%","up to ₹30,000"]],
@@ -348,7 +368,7 @@ const sites = [
     wagering:["Unlock ₹1 per ₹75 wagered","Valid 5 days"]
   },
   {
-    name:"PLAYWISE365", url:"playwise365.com", color:"#60a5fa",
+    name:"PLAYWISE365", url:"playwise365.com", release:"https://playwise365.com/bonus-release", color:"#60a5fa",
     deposit:"Min ₹500 · Max ₹50 Lakh", withdrawal:"Min ₹1,100 · Max ₹10 Lakh", unlimited:true,
     instant:"Within 5 mins · up to ₹1,00,000 (3% fee)",
     bonus:[["1st Deposit","100%","up to ₹10,000"],["2nd Deposit","150%","up to ₹15,000"],["3rd Deposit","150%","up to ₹25,000"]],
@@ -383,11 +403,15 @@ function toText(s){
   L.push("","OFFER 2 - DAILY CASHBACK",`- ${s.cashRate}`);
   s.cash.forEach(c=>L.push("- "+c));
   L.push("- "+s.cashNote,"","WAGERING: "+s.wagering.join(" · "));
+  if(s.release) L.push("","WELCOME BONUS RELEASE: "+s.release);
   return L.join("\n");
 }
 
 const escA=t=>t.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
 const lc=t=>`<button class="lc" data-copy="${escA(t)}">Copy</button>`;
+const lcAll=t=>`<button class="lc ball" data-label="Copy all" data-copy="${escA(t)}">Copy all</button>`;
+const bh=(label,t)=>`<div class="bhead"><div class="lbl">${label}</div>${lcAll(t)}</div>`;
+function fullText(s){const g=GAMES[s.name]||[];return toText(s)+(g.length?"\n\nDAILY CASHBACK GAMES ("+g.length+"):\n"+g.join(", "):"")}
 
 const siteList=document.getElementById("siteList");
 sites.forEach((s,i)=>{
@@ -400,13 +424,14 @@ sites.forEach((s,i)=>{
       <div class="sact"><button class="btn solid copy">Copy ${s.name}</button><span class="arrow">▼</span></div>
     </div>
     <div class="sbody">
+      <div class="fullrow"><button class="btn solid fullcopy">Copy All Details (with games)</button></div>
       <div class="block"><div class="lbl">Deposit</div><div class="line"><p>${s.deposit}<span class="tag">UNLIMITED</span></p>${lc("Deposit: "+s.deposit+" (Unlimited)")}</div></div>
       <div class="block"><div class="lbl">Withdrawal</div><div class="line"><p>${s.withdrawal}<span class="tag">UNLIMITED</span></p>${lc("Withdrawal: "+s.withdrawal+" (Unlimited)")}</div></div>
       ${s.instant?`<div class="block"><div class="lbl">Instant Withdrawal</div><div class="line"><p>${s.instant}</p>${lc("Instant Withdrawal: "+s.instant)}</div></div>`:""}
-      <div class="block"><div class="lbl">Offer 1 · Welcome Bonus</div>
+      <div class="block">${bh("Offer 1 · Welcome Bonus",s.bonus.map(b=>b[0]+": "+b[1]+" "+b[2]).join("\n"))}
         <table>${s.bonus.map(b=>`<tr><td class="dep">${b[0]}</td><td class="pct">${b[1]}</td><td>${b[2]}</td><td class="act">${lc(b[0]+": "+b[1]+" "+b[2])}</td></tr>`).join("")}</table>
       </div>
-      <div class="block"><div class="lbl">Offer 2 · Daily Cashback</div>
+      <div class="block">${bh("Offer 2 · Daily Cashback",["Daily Cashback: "+s.cashRate].concat(s.cash,[s.cashNote]).join("\n"))}
         <div class="line"><div class="cbbig">${s.cashRate}</div>${lc("Daily Cashback: "+s.cashRate)}</div>
         <ul>${s.cash.map(c=>`<li><div class="line"><span>${c}</span>${lc(c)}</div></li>`).join("")}<li class="mut"><div class="line"><span>${s.cashNote}</span>${lc(s.cashNote)}</div></li></ul>
       </div>
@@ -414,8 +439,11 @@ sites.forEach((s,i)=>{
         <div class="gsw"><input class="gsearch" type="search" placeholder="Search game in ${s.name}..." autocomplete="off"><button class="gx" title="Clear">✕</button></div>
         <div class="gfade"><div class="glist"></div></div><div class="gnone">No game found</div>
         <button class="btn gmore"></button></div>
-      <div class="block"><div class="lbl">Wagering</div>${s.wagering.map(w=>`<div class="line wag"><b>${w}</b>${lc(w)}</div>`).join("")}</div>
+      <div class="block">${bh("Wagering",s.wagering.join("\n"))}${s.wagering.map(w=>`<div class="line wag"><b>${w}</b>${lc(w)}</div>`).join("")}</div>
+      ${s.release?`<div class="block relblock"><div class="lbl">🎁 Welcome Bonus Release</div><div class="line wag"><a class="relbtn" href="${s.release}" target="_blank" rel="noopener"><span class="relic">🎁</span><span class="reltx">Click here to get welcome bonus detail</span><span class="relar">→</span></a>${lc(s.release)}</div></div>`:""}
     </div>`;
+  const fb=sec.querySelector(".fullcopy");
+  fb.addEventListener("click",e=>{e.stopPropagation();copy(fullText(s),fb,"Copy All Details (with games)",s.name+" full details copied")});
   const btn=sec.querySelector(".copy");
   btn.addEventListener("click",e=>{e.stopPropagation();copy(toText(s),btn,"Copy "+s.name,s.name+" copied")});
   (function(){
@@ -450,7 +478,7 @@ document.getElementById("note").textContent=NOTE;
 siteList.addEventListener("click",e=>{
   const b=e.target.closest(".lc");if(!b||b.classList.contains("gcopy"))return;
   e.stopPropagation();
-  copy(b.dataset.copy,b,"Copy","Line copied");
+  copy(b.dataset.copy,b,b.dataset.label||"Copy",b.dataset.label?"Section copied":"Line copied");
 });
 
 /* filter chips */
@@ -485,33 +513,31 @@ expandBtn.onclick=()=>{
 
 /* copy all */
 const allBtn=document.getElementById("copyAll");
-allBtn.onclick=()=>copy(sites.map(toText).join("\n\n==============================\n\n")+"\n\n"+NOTE,allBtn,"Copy All Sites","All sites copied");
+allBtn.onclick=()=>copy(sites.map(fullText).join("\n\n==============================\n\n")+"\n\n"+NOTE,allBtn,"Copy All Sites","All sites copied");
 
 /* ================= PG SEARCH ================= */
 const manualData = `
-manual 	(PG098)
-manual 	(PG099)
+manual (PG013)
+manual-upi (PG015)
 manual-upi-scan (PG018)
+manual-upi (PG026)
+manual-upi-scan (PG027)
+manual (PG025)
+manual (PG031)
+manual (PG032)
+manual-upi (PG033)
+manual (PG070)
+manual (PG098)
+manual (PG099)
+manual (PG100)
+manual (PG101)
+manual (PG102)
+manual (PG103)
+manual (PG104)
 manual-upi-scan (PG105)
-manual 	(PG013)
-manual 	(PG100)
-manual 	(PG070)
-manual 	(PG032)
-manual 	(PG025)
-manual-crypto (PG131)
-manual-crypto 	(PG231)
-manual 	(PG101)
-manual 	(PG102)
 manual-upi-scan (PG106)
 manual-upi-scan (PG107)
-manual 	(PG103)
-manual 	(PG104)
-manual-crypto (PG230)
-manual-upi-scan (PG027)
-manual-upi (PG015)
-manual-upi (PG026)
-manual 	(PG031)
-manual-upi (PG033)
+manual-crypto (PG131)
 `;
 
 const otherData = `
@@ -688,57 +714,6 @@ pgList.addEventListener("click", e => {
 });
 render();
 
-/* ---- add new PG numbers (saved in this browser) ---- */
-(function(){
-  const KEY="pgCustomAdds_v1";
-  let custom=[];
-  try{custom=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(_){custom=[]}
-  custom=custom.filter(c=>c&&/^PG\d+$/.test(c.pg)&&c.name);
-  const g=id=>document.getElementById(id);
-  const num=x=>parseInt(x.pg.slice(2));
-  const same=(a,b)=>a.pg===b.pg&&a.name.toLowerCase()===b.name.toLowerCase();
-  const sortData=()=>DATA.sort((a,b)=>num(a)-num(b));
-  custom.forEach(c=>{if(!DATA.some(d=>same(d,c)))DATA.push({name:c.name,pg:c.pg,group:c.group})});
-  sortData();
-  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(custom))}catch(_){}};
-  let grp="Manual";
-  const gc=g("ngrp");
-  gc.addEventListener("click",ev=>{const x=ev.target.closest(".bchip");if(!x)return;grp=x.dataset.g;[...gc.children].forEach(c=>c.classList.toggle("on",c===x))});
-  const hint=g("nphint"),base=hint.textContent;
-  function msg(t,bad){hint.textContent=t;hint.style.color=bad?"#f87171":"";if(bad)setTimeout(()=>{hint.textContent=base;hint.style.color=""},3500)}
-  function drawMine(){
-    g("pmine").style.display=custom.length?"block":"none";
-    g("pminecnt").textContent="Added by you · "+custom.length;
-    g("pminelist").innerHTML=custom.slice().reverse().map(c=>`<div class="mrow" style="--c:${c.group==="Others"?"#22d3ee":"#818cf8"}"><div><b>${esc(c.pg)}</b> <span>· ${esc(c.name)} · ${esc(c.group)}</span></div><button class="mdel" data-pg="${esc(c.pg)}" data-n="${esc(c.name)}" title="Remove">✕</button></div>`).join("");
-  }
-  g("pminelist").addEventListener("click",ev=>{
-    const x=ev.target.closest(".mdel");if(!x)return;
-    const t={pg:x.dataset.pg,name:x.dataset.n};
-    custom=custom.filter(c=>!same(c,t));save();
-    const i=DATA.findIndex(d=>same(d,t));if(i>-1)DATA.splice(i,1);
-    drawMine();render();showToast(t.pg+" removed");
-  });
-  function add(){
-    let raw=g("npg").value.trim().toUpperCase().replace(/\s+/g,"");
-    const name=g("npn").value.trim().replace(/\s+/g," ");
-    const m=raw.match(/^(?:PG)?(\d+)$/);
-    if(!m)return msg("Enter a valid PG number (e.g. PG217 or 217).",true);
-    if(!name)return msg("Please enter a name.",true);
-    const n=m[1].replace(/^0+(?=\d)/,"");
-    const pg="PG"+(n.length<3?n.padStart(3,"0"):n);
-    const item={pg,name,group:grp};
-    if(DATA.some(d=>same(d,item)))return msg(pg+" · "+name+" already exists.",true);
-    const other=DATA.find(d=>d.pg===pg);
-    custom.push(item);DATA.push(item);sortData();save();drawMine();
-    g("npg").value="";g("npn").value="";
-    showToast(pg+" added"+(other?" (also exists as "+other.name+")":""));
-    q.value=pg;render();
-  }
-  g("npadd").onclick=add;
-  [g("npg"),g("npn")].forEach(i=>i.addEventListener("keydown",ev=>{if(ev.key==="Enter")add()}));
-  drawMine();render();
-})();
-
 /* ================= animated background ================= */
 (function(){
   const c = document.getElementById("bg"), ctx = c.getContext("2d");
@@ -826,49 +801,7 @@ render();
     const other=r.length?`<p class="vnote" style="margin-top:12px">This ID is VIP on other brand(s):</p>${items(r)}`:"";
     show(nonHtml(id,`Not a VIP on <b>${e(B[bi])}</b>.`)+other,"non");
   }
-  /* ---- add new VIP users (saved in this browser) ---- */
-  const KEY="vipCustomAdds_v1";
-  let custom=[];
-  try{custom=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(_){custom=[]}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(custom))}catch(_){}}
-  function mIdx(n){let i=M.findIndex(x=>x.toLowerCase()===n.toLowerCase());if(i<0){M.push(n);i=M.length-1}return i}
-  function applyOne(c){const arr=D[c.id]||(D[c.id]=[]);if(arr.some(x=>x[0]===c.b))return false;arr.push([c.b,mIdx(c.m||NOMGR)]);return true}
-  custom=custom.filter(c=>c&&c.id&&Number.isInteger(c.b)&&B[c.b]);
-  custom.forEach(applyOne);
-  let selB=-1;
-  const bc=g("abchips");
-  bc.innerHTML=B.map((b,i)=>`<button type="button" class="bchip" data-b="${i}" style="--c:${colorOf(b)}"><i></i>${e(b)}</button>`).join("");
-  bc.addEventListener("click",ev=>{const x=ev.target.closest(".bchip");if(!x)return;selB=+x.dataset.b;[...bc.children].forEach(c=>c.classList.toggle("on",c===x))});
-  function fillMgr(){g("amlist").innerHTML=M.filter(x=>x!==NOMGR).map(x=>`<option value="${e(x)}">`).join("")}
-  function drawMine(){
-    const box=g("mine");box.style.display=custom.length?"block":"none";
-    g("minecnt").textContent=`Added by you · ${custom.length}`;
-    g("minelist").innerHTML=custom.slice().reverse().map(c=>`<div class="mrow" style="--c:${colorOf(B[c.b])}"><div><b>${e(c.id)}</b> <span>· ${e(B[c.b])} · ${e(c.m||NOMGR)}</span></div><button class="mdel" data-id="${e(c.id)}" data-b="${c.b}" title="Remove">✕</button></div>`).join("");
-  }
-  g("minelist").addEventListener("click",ev=>{
-    const x=ev.target.closest(".mdel");if(!x)return;
-    const id=x.dataset.id,b=+x.dataset.b;
-    custom=custom.filter(c=>!(c.id===id&&c.b===b));save();
-    if(D[id]){D[id]=D[id].filter(r=>r[0]!==b);if(!D[id].length)delete D[id]}
-    drawMine();stats();showToast("VIP removed");
-  });
-  g("mcopy").onclick=()=>copy(custom.map(c=>`${c.id} - ${B[c.b]} - ${c.m||NOMGR}`).join("\n"),g("mcopy"),"Copy list","List copied");
-  function addVip(){
-    if(selB<0)return warn("BRAND MISSING","Please select a brand first.");
-    const ids=g("aid").value.split(/[\s,;]+/).filter(Boolean).map(clean);
-    if(!ids.length||ids.some(x=>!/^\d+$/.test(x)))return warn("INVALID ID","Enter valid numeric User ID(s). For multiple IDs separate with comma or space.");
-    const mgr=g("am").value.trim().replace(/\s+/g," ");
-    const added=[],dup=[];
-    [...new Set(ids)].forEach(id=>{const c={id,b:selB,m:mgr};if(applyOne(c)){custom.push(c);added.push(id)}else dup.push(id)});
-    save();fillMgr();drawMine();stats();
-    if(!added.length)return show(`<div class="vic">⚠️</div><div class="vtag warn">ALREADY VIP</div><p class="vnote">${dup.map(e).join(", ")} already VIP on <b>${e(B[selB])}</b>.</p>`,"non");
-    g("aid").value="";
-    const extra=dup.length?`<p class="vnote" style="margin-top:10px">Already existed (skipped): ${dup.map(e).join(", ")}</p>`:"";
-    show(`<div class="vic">✅</div><div class="vtag">VIP ADDED</div><div class="vuid"><b>${added.length}</b> user${added.length>1?"s":""} added</div><div class="vitem" style="--c:${colorOf(B[selB])}"><div class="b"><small>Brand</small><strong>${e(B[selB])}</strong></div><div class="m"><small>VIP Manager</small><strong>${e(mgr||NOMGR)}</strong></div></div><p class="vnote" style="margin-top:12px">ID: <b>${added.map(e).join(", ")}</b></p>${extra}`,"vip");
-  }
-  g("aadd").onclick=addVip;
-  g("aid").addEventListener("keydown",ev=>{if(ev.key==="Enter")addVip()});
-  fillMgr();drawMine();stats();
+  stats();
   g("vqb").onclick=quick;g("vfs").onclick=filt;
   g("vq").addEventListener("keydown",ev=>{if(ev.key==="Enter")quick()});
   g("vfid").addEventListener("keydown",ev=>{if(ev.key==="Enter")filt()});
