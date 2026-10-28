@@ -286,7 +286,31 @@
     .tzcard{padding:14px}
     .tztitle{font-size:24px}
   }
+  /* ===== work tracker ===== */
+  .wkwrap{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+  .wkhead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+  .wkhead h1{font-size:28px}.wkhead p{color:var(--muted);font-size:14px}
+  .wkcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+  .wk-current{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .wk-dot{width:12px;height:12px;border-radius:50%;background:#22c55e;box-shadow:0 0 14px currentColor}
+  .wk-status{font-size:22px;font-weight:800}.wk-clock{margin-left:auto;font-size:28px;font-variant-numeric:tabular-nums;font-weight:800}
+  .wk-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+  .wk-actions button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:9px;font-size:14px;font-weight:700}
+  .wk-actions button:hover{border-color:#818cf8;transform:translateY(-1px)}.wk-actions button[data-state="working"]{--wc:#22c55e}.wk-actions button[data-state="meeting"]{--wc:#818cf8}.wk-actions button[data-state="lunch"]{--wc:#f59e0b}.wk-actions button[data-state="break"]{--wc:#06b6d4}.wk-actions button[data-state="logout"]{--wc:#f87171}
+  .wk-actions button{border-color:color-mix(in srgb,var(--wc,#818cf8) 50%,var(--line))}
+  .wkhint{color:var(--muted);font-size:12.5px;margin-top:11px}
+  .wk-table-wrap{overflow:auto}.wk-table{width:100%;border-collapse:collapse;min-width:560px}.wk-table th,.wk-table td{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line)}.wk-table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.7px}.wk-table td{font-size:14px}.wk-table tr:last-child td{border-bottom:0}.wk-table .today{color:#818cf8;font-weight:800}
+  .wk-total{font-variant-numeric:tabular-nums;font-weight:800}.wk-summary{display:flex;gap:10px;flex-wrap:wrap}.wk-metric{flex:1;min-width:150px;background:var(--panel2);padding:12px;border-radius:10px}.wk-metric small{display:block;color:var(--muted)}.wk-metric b{font-size:19px}
+  .wk-actions button{border:0!important;color:#fff!important;box-shadow:0 5px 0 color-mix(in srgb,var(--wc) 72%,#111),0 8px 16px rgba(0,0,0,.25);transition:transform .12s,box-shadow .12s,filter .12s;background:linear-gradient(150deg,color-mix(in srgb,var(--wc) 78%,white),var(--wc))!important;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .wk-actions button:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 7px 0 color-mix(in srgb,var(--wc) 72%,#111),0 11px 19px rgba(0,0,0,.28)}
+  .wk-actions button:active{transform:translateY(3px);box-shadow:0 2px 0 color-mix(in srgb,var(--wc) 72%,#111),0 4px 9px rgba(0,0,0,.22)}
+  .wk-actions button[data-state="working"]{--wc:#16a34a}.wk-actions button[data-state="meeting"]{--wc:#7c3aed}.wk-actions button[data-state="lunch"]{--wc:#ea580c}.wk-actions button[data-state="break"]{--wc:#0891b2}.wk-actions button[data-state="logout"]{--wc:#e11d48}
+  .wkchart{display:grid;grid-template-columns:repeat(7,minmax(54px,1fr));gap:12px;align-items:end;min-height:190px;padding:16px 8px 8px;border-bottom:1px solid var(--line)}
+  .wkbar-col{height:172px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:7px;min-width:0}.wkbar-val{font-size:11px;font-weight:800;color:var(--text);white-space:nowrap}.wkbar{height:128px;width:min(36px,70%);display:flex;flex-direction:column;justify-content:flex-end;border-radius:9px 9px 4px 4px;background:color-mix(in srgb,var(--line) 55%,transparent);overflow:hidden;box-shadow:inset 0 1px 4px rgba(0,0,0,.18)}
+  .wkbar-work{width:100%;background:linear-gradient(180deg,#4ade80,#16a34a)}.wkbar-meet{width:100%;background:linear-gradient(180deg,#c4b5fd,#7c3aed)}.wkbar-break{width:100%;background:linear-gradient(180deg,#67e8f9,#0891b2)}.wkbar-day{font-size:11px;color:var(--muted);text-align:center;white-space:nowrap}.wklegend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:12px}.wklegend span{display:flex;align-items:center;gap:6px}.wklegend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+  @media(max-width:560px){.wk-clock{margin-left:0;width:100%}.wkwrap{padding-top:18px}.wkchart{gap:5px;padding-inline:0}}
   @media(max-width:560px){.tab{padding:8px 11px;font-size:13px}}
+
 </style>
 </head>
 <body>
@@ -301,6 +325,7 @@
       <button class="tab" role="tab" data-tab="pg">PG Search</button>
       <button class="tab" role="tab" data-tab="vip">VIP Check</button>
       <button class="tab" role="tab" data-tab="tz">Timezone</button>
+      <button class="tab" role="tab" data-tab="work">Work Tracker</button>
     </div>
     <button class="themebtn" id="themeBtn">Light Mode</button>
   </div>
@@ -411,6 +436,26 @@
   </div>
 </main>
 
+
+<!-- ============ TAB 5: WORK TRACKER ============ -->
+<main class="panel" id="panel-work">
+  <div class="wkwrap">
+    <div class="wkhead"><div><h1>Duty Tracker Pro</h1><p>Track your daily work status. Meeting time counts as working time.</p></div></div>
+    <section class="wkcard" aria-label="Current work status">
+      <div class="wk-current"><span class="wk-dot" id="wkDot"></span><span class="wk-status" id="wkStatus">Logged out</span><span class="wk-clock" id="wkClock">00:00:00</span></div>
+      <div class="wk-actions">
+        <button type="button" data-state="working">💻 Working</button>
+        <button type="button" data-state="meeting">🤝 Meeting</button>
+        <button type="button" data-state="lunch">🍽️ Lunch Break</button>
+        <button type="button" data-state="break">☕ Small Break</button>
+        <button type="button" data-state="logout">🚪 Logout</button>
+      </div>
+      <p class="wkhint">Choose a status to start it. Switching status saves the elapsed time; logout ends the current session. Your records stay in this browser.</p>
+    </section>
+    <section class="wkcard"><h2 style="font-size:18px;margin-bottom:12px">This Week</h2><div class="wk-summary" id="wkSummary"></div></section>
+    <section class="wkcard"><h2 style="font-size:18px;margin-bottom:8px">Weekly Activity</h2><div class="wkchart" id="wkChart" role="img" aria-label="Daily work, meeting, and break time for the last seven days"></div><div class="wklegend"><span><i style="background:#16a34a"></i>Working</span><span><i style="background:#7c3aed"></i>Meeting (included in working)</span><span><i style="background:#0891b2"></i>Breaks</span></div></section><section class="wkcard"><h2 style="font-size:18px;margin-bottom:12px">Daily Status · Last 7 Days</h2><div class="wk-table-wrap"><table class="wk-table"><thead><tr><th>Date</th><th>First login</th><th>Last logout</th><th>Working</th><th>Meetings</th><th>Breaks</th></tr></thead><tbody id="wkRows"></tbody></table></div></section>
+  </div>
+</main>
 <div class="vov" id="vov"><div class="vpop" id="vpop"></div></div>
 
 <div class="toast" id="toast"></div>
@@ -436,7 +481,7 @@ function movePill(){
 }
 function openTab(key){
   tabBtns.forEach(b=>b.classList.toggle("on",b.dataset.tab===key));
-  ["sites","pg","vip","tz"].forEach(k=>document.getElementById("panel-"+k).classList.toggle("on",k===key));
+  ["sites","pg","vip","tz","work"].forEach(k=>document.getElementById("panel-"+k).classList.toggle("on",k===key));
   movePill();
   try{history.replaceState(null,"","#"+key)}catch(_){}
   window.scrollTo(0,0);
@@ -1061,8 +1106,42 @@ render();
   setNow();tick();setInterval(tick,1000);
 })();
 
+
+/* ================= weekly work tracker ================= */
+(function(){
+  const KEY="sitesHubWorkTrackerV1", labels={working:"Working",meeting:"Meeting",lunch:"Lunch Break",break:"Small Break",logout:"Logged out"};
+  const colors={working:"#22c55e",meeting:"#818cf8",lunch:"#f59e0b",break:"#06b6d4",logout:"#8d93a8"};
+  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY))||{days:{},active:null}}catch(_){return {days:{},active:null}}};
+  let data=read();
+  const pad=n=>String(n).padStart(2,"0"), dayKey=ms=>{const d=new Date(ms);return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())};
+  const dayStart=ms=>{const d=new Date(ms);d.setHours(0,0,0,0);return d.getTime()};
+  function day(k){return data.days[k]||(data.days[k]={working:0,meeting:0,lunch:0,break:0,firstLogin:null,lastLogout:null})}
+  function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+  function addElapsed(from,to,state){if(!from||to<=from)return;let t=from;while(t<to){const end=Math.min(to,dayStart(t)+86400000),d=day(dayKey(t));d[state]=(d[state]||0)+(end-t);t=end}}
+  function switchState(next){const now=Date.now(),a=data.active;if(a){addElapsed(a.since,now,a.state);if(next==="logout"){day(dayKey(now)).lastLogout=now}}
+    if(next==="logout"){data.active=null}else{const d=day(dayKey(now));if(!d.firstLogin)d.firstLogin=now;data.active={state:next,since:now}}
+    save();render();showToast(next==="logout"?"Logged out":"Status: "+labels[next]);
+  }
+  function fmt(ms){ms=Math.max(0,Math.floor(ms/1000));return pad(Math.floor(ms/3600))+":"+pad(Math.floor(ms%3600/60))+":"+pad(ms%60)}
+  function short(ms){return ms?new Date(ms).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}):"—"}
+  function dateLabel(k){return new Date(k+"T12:00:00").toLocaleDateString([], {weekday:"short",month:"short",day:"numeric"})}
+  function totals(k){const d=data.days[k]||{};let work=d.working||0,meet=d.meeting||0,lunch=d.lunch||0,br=d.break||0;if(data.active&&dayKey(data.active.since)===k){const dur=Date.now()-data.active.since;if(data.active.state==="working")work+=dur;if(data.active.state==="meeting")meet+=dur;if(data.active.state==="lunch")lunch+=dur;if(data.active.state==="break")br+=dur}return {work:work+meet,meet,lunch,br,d}}
+  function render(){const now=Date.now(),active=data.active,state=active?.state||"logout";document.getElementById("wkStatus").textContent=labels[state];document.getElementById("wkDot").style.background=colors[state];document.getElementById("wkClock").textContent=active?fmt(now-active.since):"00:00:00";
+    const keys=[];for(let i=6;i>=0;i--){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-i);keys.push(dayKey(d.getTime()))}
+    let sw=0,sm=0,sb=0;document.getElementById("wkRows").innerHTML=keys.map(k=>{const t=totals(k);sw+=t.work;sm+=t.meet;sb+=t.lunch+t.br;const dayStatus=data.active&&dayKey(data.active.since)===k?data.active.state:"";return `<tr><td class="${k===dayKey(now)?"today":""}">${dateLabel(k)}${dayStatus?` · ${labels[dayStatus]}`:""}</td><td>${short(t.d.firstLogin)}</td><td>${short(t.d.lastLogout)}</td><td class="wk-total">${fmt(t.work)}</td><td>${fmt(t.meet)}</td><td>${fmt(t.lunch+t.br)}</td></tr>`}).join("");
+    document.getElementById("wkSummary").innerHTML=`<div class="wk-metric"><small>Total working (includes meetings)</small><b>${fmt(sw)}</b></div><div class="wk-metric"><small>Meeting time</small><b>${fmt(sm)}</b></div><div class="wk-metric"><small>Break time</small><b>${fmt(sb)}</b></div>`;
+    const max=Math.max(1,...keys.map(k=>{const t=totals(k);return t.work+t.lunch+t.br}));
+    document.getElementById("wkChart").innerHTML=keys.map(k=>{const t=totals(k),total=t.work+t.lunch+t.br,scale=120/max;return `<div class="wkbar-col"><span class="wkbar-val">${total?fmt(total).slice(0,5):"0h"}</span><div class="wkbar" title="${dateLabel(k)} · work ${fmt(t.work)} · meeting ${fmt(t.meet)} · breaks ${fmt(t.lunch+t.br)}"><div class="wkbar-break" style="height:${Math.max(0,(t.lunch+t.br)*scale)}px"></div><div class="wkbar-meet" style="height:${Math.max(0,t.meet*scale)}px"></div><div class="wkbar-work" style="height:${Math.max(0,(t.work-t.meet)*scale)}px"></div></div><span class="wkbar-day">${dateLabel(k).split(",")[0]}</span></div>`}).join("");
+  }
+  document.querySelectorAll(".wk-actions button").forEach(b=>b.addEventListener("click",()=>switchState(b.dataset.state)));
+  if(data.active&&Date.now()-data.active.since>0){/* Resume an unfinished status after reload. */}
+  render();setInterval(render,1000);
+})();
 /* start on the tab from URL hash (#pg / #vip / #sites) */
-openTab(["pg","vip","tz"].includes(location.hash.slice(1))?location.hash.slice(1):"sites");
+openTab(["pg","vip","tz","work"].includes(location.hash.slice(1))?location.hash.slice(1):"sites");
 </script>
 </body>
 </html>
+
+
+
