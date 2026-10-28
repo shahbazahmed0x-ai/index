@@ -222,6 +222,71 @@
   .mrow b{color:var(--text)}.mrow span{color:var(--muted);font-size:12.5px}
   .mdel{border:0;background:transparent;color:#f87171;cursor:pointer;font-size:16px;padding:2px 6px;border-radius:6px}
   .mdel:hover{background:rgba(248,113,113,.15)}
+
+  /* ===== timezone panel ===== */
+  .tzwrap{max-width:900px;margin:0 auto;padding:6vh 14px 60px}
+  .tztitle{font-size:30px;text-align:center;letter-spacing:.5px;color:var(--h1);margin-bottom:6px}
+  .tztitle span{filter:drop-shadow(0 0 12px rgba(34,211,238,.6))}
+  .tzsub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:18px}
+  .tzutc{display:flex;width:max-content;max-width:100%;margin:0 auto 22px;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 18px;font-size:13.5px;color:var(--muted);backdrop-filter:blur(6px)}
+  .tzutc b{color:var(--text);font-weight:700}
+  .tzlive{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:tzpulse 1.8s infinite;flex:none}
+  @keyframes tzpulse{70%{box-shadow:0 0 0 9px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+  .tzbox{position:relative;border-radius:20px;padding:2px}
+  .tzbox::before,.tzbox::after{content:"";position:absolute;inset:0;border-radius:20px;background:conic-gradient(from var(--a),#6366f1,#ec4899,#22d3ee,#6366f1);animation:spin 5s linear infinite}
+  .tzbox::before{filter:blur(12px);opacity:.45}
+  .tzcard{position:relative;z-index:2;background:var(--bg);border-radius:18px;padding:22px}
+
+  .tzgrid{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;margin-bottom:20px}
+  .tzside{display:flex;flex-direction:column;gap:10px;background:var(--panel2);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:16px;padding:18px}
+  .tzside.from{--c:#6366f1}
+  .tzside.to{--c:#ec4899}
+  .tzlbl{font-size:12px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--c)}
+  .tzsel,.tzdate,.tztime{width:100%;border:1px solid var(--line);background:var(--input);color:var(--text);border-radius:12px;outline:none;font-family:inherit;transition:border-color .15s,box-shadow .15s}
+  .tzsel{padding:13px 12px;font-size:14.5px;font-weight:600;cursor:pointer}
+  .tzdate{padding:11px 14px;font-size:15px;font-weight:600;color-scheme:dark}
+  :root[data-theme="light"] .tzdate,:root[data-theme="light"] .tztime{color-scheme:light}
+  .tztime{padding:12px;font-size:24px;font-weight:800;text-align:center;font-family:ui-monospace,"Courier New",monospace;color-scheme:dark;letter-spacing:1px}
+  .tzsel:focus,.tzdate:focus,.tztime:focus{border-color:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 25%,transparent)}
+  .tzsel option,.tzsel optgroup{background:var(--input);color:var(--text)}
+  .tzsel optgroup{font-weight:800;color:var(--c)}
+
+  .tzshow{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:8px 0 4px;text-align:center}
+  .tzbig{font-size:46px;font-weight:900;font-family:ui-monospace,"Courier New",monospace;letter-spacing:-1px;line-height:1.1;background:linear-gradient(90deg,var(--c),#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tzdd{color:var(--muted);font-size:14px;font-weight:600;margin-top:6px}
+  .tzcity{font-size:12.5px;color:var(--muted);margin-top:2px}
+
+  .tzmid{align-self:center;width:52px;height:52px;border:0;border-radius:50%;cursor:pointer;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,#6366f1,#ec4899);box-shadow:0 6px 20px rgba(99,102,241,.45);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
+  .tzmid:hover{transform:rotate(180deg) scale(1.08);box-shadow:0 8px 26px rgba(236,72,153,.5)}
+  .tzbtns{display:flex;gap:8px}
+  .tzbtns .btn{flex:1}
+
+  .tzinfo{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:24px}
+  .tzic{position:relative;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 16%,var(--panel2)),var(--panel2));border:1px solid color-mix(in srgb,var(--c) 40%,var(--line));border-left:4px solid var(--c);border-radius:12px;padding:14px 16px}
+  .tzic small{display:block;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .tzic strong{font-size:20px;font-weight:800;color:var(--c)}
+
+  .tzh{font-size:12.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .tzclocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+  .tzclk{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--item1),var(--item2));border:1px solid var(--line);border-radius:14px;padding:13px 14px;transition:transform .25s,border-color .25s,box-shadow .25s}
+  .tzclk:hover{transform:translateY(-3px);border-color:#6366f1;box-shadow:0 0 22px rgba(99,102,241,.3),0 0 40px rgba(236,72,153,.12)}
+  .tzclk-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .tzclk-city{font-weight:800;font-size:15px;color:var(--text)}
+  .tzclk-ic{font-size:17px}
+  .tzclk-time{font-size:22px;font-weight:800;font-family:ui-monospace,"Courier New",monospace;margin:4px 0 2px;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tzclk-zone{font-size:12px;color:var(--muted);font-weight:600}
+  .tzclk.night .tzclk-time{background:linear-gradient(90deg,#a78bfa,#ec4899);-webkit-background-clip:text;background-clip:text}
+
+  @media(max-width:700px){
+    .tzgrid{grid-template-columns:1fr}
+    .tzmid{margin:-2px auto;transform:rotate(90deg)}
+    .tzmid:hover{transform:rotate(270deg) scale(1.08)}
+    .tzbig{font-size:38px}
+    .tzcard{padding:14px}
+    .tztitle{font-size:24px}
+  }
+  @media(max-width:560px){.tab{padding:8px 11px;font-size:13px}}
 </style>
 </head>
 <body>
@@ -235,6 +300,7 @@
       <button class="tab on" role="tab" data-tab="sites">Sites Info</button>
       <button class="tab" role="tab" data-tab="pg">PG Search</button>
       <button class="tab" role="tab" data-tab="vip">VIP Check</button>
+      <button class="tab" role="tab" data-tab="tz">Timezone</button>
     </div>
     <button class="themebtn" id="themeBtn">Light Mode</button>
   </div>
@@ -296,6 +362,55 @@
     <div class="vstats" id="vstats"></div>
   </div>
 </main>
+
+<!-- ============ TAB 4: TIMEZONE ============ -->
+<main class="panel" id="panel-tz">
+  <div class="tzwrap">
+    <h1 class="tztitle"><span>🌍</span> Time Zone Converter</h1>
+    <p class="tzsub">Convert time across South Asia, Africa, Middle East, Europe and the Americas</p>
+    <div class="tzutc"><span class="tzlive"></span>Current UTC: <b id="tzUtc">--</b></div>
+
+    <div class="tzbox"><div class="tzcard">
+      <div class="tzgrid">
+        <div class="tzside from">
+          <div class="tzlbl">From Time Zone</div>
+          <select class="tzsel" id="tzFrom"></select>
+          <input class="tzdate" id="tzDate" type="date">
+          <input class="tztime" id="tzTime" type="time" value="13:00">
+          <div class="tzshow">
+            <div class="tzbig" id="tzFromBig">--:--</div>
+            <div class="tzdd" id="tzFromDate"></div>
+          </div>
+          <div class="tzbtns"><button class="btn" id="tzNow" type="button" style="--c:#6366f1">Now</button></div>
+        </div>
+
+        <button class="tzmid" id="tzSwap" type="button" title="Swap zones" aria-label="Swap zones">⇄</button>
+
+        <div class="tzside to">
+          <div class="tzlbl">To Time Zone</div>
+          <select class="tzsel" id="tzTo"></select>
+          <div class="tzshow">
+            <div class="tzbig" id="tzToBig">--:--</div>
+            <div class="tzdd" id="tzToDate"></div>
+            <div class="tzcity" id="tzToCity"></div>
+          </div>
+          <div class="tzbtns"><button class="btn solid" id="tzCopy" type="button" style="--c:#ec4899">Copy Result</button></div>
+        </div>
+      </div>
+
+      <div class="tzinfo">
+        <div class="tzic" style="--c:#818cf8"><small>Time Difference</small><strong id="tzDiff">--</strong></div>
+        <div class="tzic" style="--c:#ec4899"><small>Source Offset</small><strong id="tzFromOff">--</strong></div>
+        <div class="tzic" style="--c:#22d3ee"><small>Destination Offset</small><strong id="tzToOff">--</strong></div>
+        <div class="tzic" style="--c:#facc15"><small>Day Indicator</small><strong id="tzDay">--</strong></div>
+      </div>
+
+      <h2 class="tzh">🌐 Major World Clocks (Live)</h2>
+      <div class="tzclocks" id="tzClocks"></div>
+    </div></div>
+  </div>
+</main>
+
 <div class="vov" id="vov"><div class="vpop" id="vpop"></div></div>
 
 <div class="toast" id="toast"></div>
@@ -321,9 +436,7 @@ function movePill(){
 }
 function openTab(key){
   tabBtns.forEach(b=>b.classList.toggle("on",b.dataset.tab===key));
-  document.getElementById("panel-sites").classList.toggle("on",key==="sites");
-  document.getElementById("panel-pg").classList.toggle("on",key==="pg");
-  document.getElementById("panel-vip").classList.toggle("on",key==="vip");
+  ["sites","pg","vip","tz"].forEach(k=>document.getElementById("panel-"+k).classList.toggle("on",k===key));
   movePill();
   try{history.replaceState(null,"","#"+key)}catch(_){}
   window.scrollTo(0,0);
@@ -807,8 +920,149 @@ render();
   g("vfid").addEventListener("keydown",ev=>{if(ev.key==="Enter")filt()});
 })();
 
+
+/* ================= TIMEZONE CONVERTER ================= */
+(function(){
+  const TZ_GROUPS=[
+    ["South Asia (Bangladesh & Neighbors)",[
+      ["Asia/Dhaka","BST - Bangladesh (Dhaka) [UTC +6:00]"],
+      ["Asia/Kolkata","IST - India Standard Time (New Delhi) [UTC +5:30]"],
+      ["Asia/Karachi","PKT - Pakistan (Karachi) [UTC +5:00]"],
+      ["Asia/Colombo","SLST - Sri Lanka (Colombo) [UTC +5:30]"],
+      ["Asia/Kathmandu","NPT - Nepal (Kathmandu) [UTC +5:45]"]]],
+    ["Africa (All Regions)",[
+      ["Africa/Lagos","WAT - Nigeria (Lagos) [UTC +1:00]"],
+      ["Africa/Accra","GMT - Ghana (Accra) [UTC +0:00]"],
+      ["Africa/Dakar","GMT - Senegal (Dakar) [UTC +0:00]"],
+      ["Africa/Nairobi","EAT - Kenya (Nairobi) [UTC +3:00]"],
+      ["Africa/Addis_Ababa","EAT - Ethiopia (Addis Ababa) [UTC +3:00]"],
+      ["Africa/Dar_es_Salaam","EAT - Tanzania (Dar es Salaam) [UTC +3:00]"],
+      ["Africa/Kampala","EAT - Uganda (Kampala) [UTC +3:00]"],
+      ["Africa/Johannesburg","SAST - South Africa (Johannesburg) [UTC +2:00]"],
+      ["Africa/Harare","CAT - Central Africa / Zimbabwe (Harare) [UTC +2:00]"],
+      ["Africa/Lusaka","CAT - Zambia (Lusaka) [UTC +2:00]"],
+      ["Africa/Cairo","EET - Egypt (Cairo) [UTC +2:00]"],
+      ["Africa/Casablanca","WEST - Morocco (Casablanca) [UTC +1:00]"],
+      ["Africa/Algiers","CET - Algeria (Algiers) [UTC +1:00]"]]],
+    ["Global Standards & Europe",[
+      ["UTC","UTC - Universal Coordinated Time [UTC +0:00]"],
+      ["Europe/London","GMT/BST - United Kingdom (London)"],
+      ["Europe/Paris","CET - Central Europe (Paris, Berlin, Rome)"],
+      ["Europe/Moscow","MSK - Russia (Moscow) [UTC +3:00]"]]],
+    ["Middle East & East Asia",[
+      ["Asia/Dubai","GST - United Arab Emirates (Dubai) [UTC +4:00]"],
+      ["Asia/Riyadh","AST - Saudi Arabia (Riyadh) [UTC +3:00]"],
+      ["Asia/Singapore","SGT - Singapore [UTC +8:00]"],
+      ["Asia/Hong_Kong","HKT - Hong Kong [UTC +8:00]"],
+      ["Asia/Tokyo","JST - Japan (Tokyo) [UTC +9:00]"],
+      ["Asia/Shanghai","CST - China (Beijing) [UTC +8:00]"]]],
+    ["Americas & Pacific",[
+      ["America/New_York","EST/EDT - US Eastern (New York)"],
+      ["America/Chicago","CST/CDT - US Central (Chicago)"],
+      ["America/Los_Angeles","PST/PDT - US Pacific (Los Angeles)"],
+      ["America/Sao_Paulo","BRT - Brazil (São Paulo) [UTC -3:00]"],
+      ["Australia/Sydney","AEST - Australia (Sydney) [UTC +10:00]"],
+      ["Pacific/Auckland","NZST - New Zealand (Auckland) [UTC +12:00]"]]]
+  ];
+  const CITIES=[
+    ["Dhaka","Asia/Dhaka","BST (UTC+6)"],["Kolkata","Asia/Kolkata","IST (UTC+5:30)"],
+    ["Dubai","Asia/Dubai","GST (UTC+4)"],["Lagos","Africa/Lagos","WAT (UTC+1)"],
+    ["Nairobi","Africa/Nairobi","EAT (UTC+3)"],["Johannesburg","Africa/Johannesburg","SAST (UTC+2)"],
+    ["Cairo","Africa/Cairo","EET (UTC+2)"],["London","Europe/London","GMT/BST"],
+    ["New York","America/New_York","EST/EDT"]
+  ];
+  const $=id=>document.getElementById(id);
+  const selFrom=$("tzFrom"),selTo=$("tzTo"),inDate=$("tzDate"),inTime=$("tzTime");
+  const label={};
+  function fillSelect(sel,def){
+    TZ_GROUPS.forEach(([g,items])=>{
+      const og=document.createElement("optgroup");og.label=g;
+      items.forEach(([v,t])=>{const o=document.createElement("option");o.value=v;o.textContent=t;label[v]=t;og.appendChild(o)});
+      sel.appendChild(og);
+    });
+    sel.value=def;
+  }
+  fillSelect(selFrom,"Asia/Dhaka");fillSelect(selTo,"Asia/Kolkata");
+
+  const cityName=tz=>{const t=label[tz]||tz;const m=t.match(/\(([^)]+)\)/);return m?m[1]:(t.split(" - ")[1]||tz).replace(/\s*\[.*$/,"")};
+  const pad=n=>String(n).padStart(2,"0");
+
+  /* offset (minutes) of a zone at a given UTC timestamp */
+  function tzOff(ms,tz){
+    const p={};
+    new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"})
+      .formatToParts(new Date(ms)).forEach(x=>p[x.type]=x.value);
+    const asUtc=Date.UTC(+p.year,+p.month-1,+p.day,(+p.hour)%24,+p.minute,+p.second);
+    return Math.round((asUtc-Math.floor(ms/1000)*1000)/60000);
+  }
+  /* wall-clock time in a zone -> real UTC timestamp (DST safe) */
+  function toUtc(dateStr,timeStr,tz){
+    const [y,m,d]=dateStr.split("-").map(Number),[hh,mm]=timeStr.split(":").map(Number);
+    const local=Date.UTC(y,m-1,d,hh,mm);
+    let g=local-tzOff(local,tz)*60000;
+    g=local-tzOff(g,tz)*60000;
+    return g;
+  }
+  const fmtTime=(ms,tz,sec)=>new Date(ms).toLocaleTimeString("en-US",{timeZone:tz,hour:"2-digit",minute:"2-digit",second:sec?"2-digit":undefined,hour12:true});
+  const fmtDate=(ms,tz)=>new Date(ms).toLocaleDateString("en-US",{timeZone:tz,weekday:"short",month:"short",day:"numeric",year:"numeric"});
+  const isoDay=(ms,tz)=>new Date(ms).toLocaleDateString("en-CA",{timeZone:tz});
+  const offTxt=m=>{const a=Math.abs(m);return "UTC "+(m<0?"-":"+")+Math.floor(a/60)+":"+pad(a%60)};
+  const diffTxt=m=>{if(!m)return "0 hours";const a=Math.abs(m);return (m<0?"-":"+")+Math.floor(a/60)+":"+pad(a%60)+" hours"};
+
+  let last="";
+  function calc(){
+    if(!inDate.value||!inTime.value)return;
+    const f=selFrom.value,t=selTo.value;
+    const ms=toUtc(inDate.value,inTime.value,f);
+    const fo=tzOff(ms,f),to=tzOff(ms,t);
+    $("tzFromBig").textContent=fmtTime(ms,f);
+    $("tzToBig").textContent=fmtTime(ms,t);
+    $("tzFromDate").textContent=fmtDate(ms,f);
+    $("tzToDate").textContent=fmtDate(ms,t);
+    $("tzToCity").textContent=cityName(t);
+    $("tzFromOff").textContent=offTxt(fo);
+    $("tzToOff").textContent=offTxt(to);
+    $("tzDiff").textContent=diffTxt(to-fo);
+    const dd=Math.round((Date.parse(isoDay(ms,t)+"T00:00:00Z")-Date.parse(isoDay(ms,f)+"T00:00:00Z"))/864e5);
+    $("tzDay").textContent=dd===0?"Same Day":dd>0?"Next Day (+"+dd+")":"Previous Day ("+dd+")";
+    last=`${fmtTime(ms,f)}, ${fmtDate(ms,f)} (${cityName(f)}) = ${fmtTime(ms,t)}, ${fmtDate(ms,t)} (${cityName(t)})`;
+  }
+  function setNow(){
+    const tz=selFrom.value,ms=Date.now();
+    inDate.value=isoDay(ms,tz);
+    inTime.value=new Date(ms).toLocaleTimeString("en-GB",{timeZone:tz,hour:"2-digit",minute:"2-digit",hourCycle:"h23"});
+    calc();
+  }
+  [selFrom,selTo].forEach(s=>s.addEventListener("change",calc));
+  inDate.addEventListener("input",calc);inTime.addEventListener("input",calc);
+  $("tzNow").onclick=setNow;
+  $("tzSwap").onclick=()=>{const a=selFrom.value;selFrom.value=selTo.value;selTo.value=a;calc()};
+  const cb=$("tzCopy");cb.onclick=()=>copy(last,cb,"Copy Result","Time conversion copied");
+
+  /* live world clocks (built once, updated in place) */
+  const clockWrap=$("tzClocks");
+  const clocks=CITIES.map(([n,tz,ab])=>{
+    const d=document.createElement("div");d.className="tzclk";
+    d.innerHTML=`<div class="tzclk-top"><span class="tzclk-city">${n}</span><span class="tzclk-ic"></span></div><div class="tzclk-time"></div><div class="tzclk-zone">${ab}</div>`;
+    clockWrap.appendChild(d);
+    return {el:d,tz,time:d.querySelector(".tzclk-time"),ic:d.querySelector(".tzclk-ic")};
+  });
+  function tick(){
+    const now=Date.now();
+    $("tzUtc").textContent=new Date(now).toUTCString().replace("GMT","");
+    clocks.forEach(c=>{
+      c.time.textContent=fmtTime(now,c.tz,true);
+      const h=+new Date(now).toLocaleTimeString("en-GB",{timeZone:c.tz,hour:"2-digit",hourCycle:"h23"});
+      const night=h<6||h>=19;
+      c.el.classList.toggle("night",night);
+      c.ic.textContent=night?"🌙":"☀️";
+    });
+  }
+  setNow();tick();setInterval(tick,1000);
+})();
+
 /* start on the tab from URL hash (#pg / #vip / #sites) */
-openTab(["pg","vip"].includes(location.hash.slice(1))?location.hash.slice(1):"sites");
+openTab(["pg","vip","tz"].includes(location.hash.slice(1))?location.hash.slice(1):"sites");
 </script>
 </body>
 </html>
